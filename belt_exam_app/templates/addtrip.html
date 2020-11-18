@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+  <body>   
+    <div class="container text-center bg-light"> <!--start container-->
+
+        <nav class="navbar navbar-expand-lg navbar-inverse bg-light top-fixed" role="navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Add A Job</a>
+                <div class="navbar-collapse collapse">
+                    <div class="mr-auto">     
+                    </div>
+                      <ul class="navbar-nav">
+                        <li class="nav-item"><a href="/dashboard" class="nav-link">Back</a></li>
+                        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="row"> <!--start row-->
+            
+            <div class="col"> <!--start col-->
+               
+                <form class="text-center border border-light p-5" action="/create_trip" method="POST">
+                {% csrf_token %}
+                    
+                    <!--Destination -->
+                    Destination
+                    <div class="form-group">
+                        <input type="text" id="" class="form-control mb-4" placeholder="title" name="travelDestination">
+                        <span class="text-danger">
+                            {% for message in messages %}
+                                {% if message.tags == 'destinationLength error' %}
+                                    {{ message }}
+                                {% endif %}
+                            {% endfor %}
+                        </span>   
+                    </div>
+
+                    
+                    <!-- Travel date start -->
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            Travel Date From
+                            
+                            <input type="date" id="" class="form-control" placeholder="Network" name="startTravel">
+                            <span class="text-danger">
+                                {% for message in messages %}
+                                    {% if message.tags == 'noStart error' %}
+                                        {{ message }}
+                                        {% elif message.tags == 'pastTravel error' %}
+                                        {{message}}
+                                        {% elif message.tags == 'startFirst error' %}
+                                        {{message}}
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        
+                        <!-- travel date end -->
+                        <div class="col">
+                            Travel Date To
+                            <input class="form-control" type="date" value="" id="" name="endTravel">
+                            <span class="text-danger">
+                                {% for message in messages %}
+                                        {% if message.tags == 'noEnd error' %}
+                                        {{ message }}
+                                        {% elif message.tags == 'endPastTravel error' %}
+                                        {{ message }}
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="form-group">
+                        Description
+                        <textarea class="form-control rounded-0" id="" rows="3" placeholder="travel Description" name="travelDescription"></textarea>
+                        <span class="text-danger">
+                            {% for message in messages %}
+                                {% if message.tags == 'descriptionLength error' %}
+                                    {{ message }}
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+
+                    <!-- Send button -->
+                    <button class="btn btn-info btn-block" type="submit">Add Job</button>
+
+                </form>
+                <!-- Default form contact -->
+
+            </div> <!--end col-->
+
+        </div> <!--end row-->
+
+    </div> <!--end container-->
+</body>
+</html>

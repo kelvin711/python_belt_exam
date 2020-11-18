@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container bg-light"> <!--start container-->
+        <nav class="navbar navbar-expand-lg navbar-inverse bg-light top-fixed" role="navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Welcome {{ user.firstname }}!</a>
+                <div class="navbar-collapse collapse">
+                    <div class="mr-auto">     
+                    </div>
+                      <ul class="navbar-nav">
+                        <li class="nav-item"><a href="/addtrip" class="nav-link">Create A Trip!</a></li>
+                        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br>
+        <h3>Your Trip Schedules</h3>
+        <div class="row"> <!--start row-->
+                
+            <div class="col"> <!--start col-->
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Travel Start Date</th>
+                        <th scope="col">Travel End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for travel in yourTrips %}
+                      <tr>
+                        <th scope="row"><a href="view/{{ travel.id }}">{{ travel.destination }}</a></th>
+                        <td>{{ travel.start_date }}</td>
+                        <td>{{ travel.enddate }}</td>
+                        <td>{{ travel.description }}</td>
+                        <td><a href="cancel/{{ travel.id }}">Cancel</a>
+                            {% if user == travel.creator %}
+                                | <a href="delete/{{ travel.id }}">Delete</a>
+                            {% endif %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+            </div> <!--end col-->
+        </div> <!--end row-->
+        <br>
+        <h3>Other User's Travel Plans</h3>
+        <div class="row"> <!--start row-->
+                
+            <div class="col"> <!--start col-->
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Travel Start Date</th>
+                        <th scope="col">Travel End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for travel in otherTrips %}
+                      <tr>
+                        <th scope="row"><a href="view/{{ travel.id }}">{{ travel.destination }}</a></th>
+                        <td>{{ travel.start_date }}</td>
+                        <td>{{ travel.enddate }}</td>
+                        <td>{{ travel.description }}</td>
+                        <td>
+                            {% if user == travel.creator %}
+                                <a href="delete/{{ travel.id }}">Delete</a> |
+                            {% endif %}
+                            <a href="joinTrip/{{ travel.id }}">Join</a></td>  
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+
+
+            </div> <!--end col-->
+
+        </div> <!--end row-->
+
+
+
+
+
+
+
+
+    </div> <!--end container-->
+
+
+
+
+  </body>
+</html>
+
+
